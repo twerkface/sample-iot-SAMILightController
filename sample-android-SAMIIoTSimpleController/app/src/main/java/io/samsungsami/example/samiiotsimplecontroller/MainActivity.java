@@ -41,8 +41,6 @@ public class MainActivity  extends Activity {
     private TextView mStatusUpdateTime;
     private TextView mWSStatus;
     private TextView mWSReceived; // received ack or msg at /websocket end point
-    private Button onBtn;
-    private Button offBtn;
 
     private static final String WS_HEADER = "WebSocket /websocket: ";
     private static final String LIVE_HEADER = "WebSocket /live: ";
@@ -54,6 +52,8 @@ public class MainActivity  extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         TextView deviceName;
         TextView deviceID;
+        Button onBtn;
+        Button offBtn;
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -64,7 +64,6 @@ public class MainActivity  extends Activity {
         mDeviceStatus = (TextView)findViewById(R.id.device_status);
         mStatusUpdateTime = (TextView)findViewById(R.id.status_update_time);
 
-        //YWU TODO add mWSStatus
         mWSStatus = (TextView)findViewById(R.id.ws_status);
         mWSReceived = (TextView)findViewById(R.id.ws_received);
 
@@ -170,18 +169,18 @@ public class MainActivity  extends Activity {
                 displayDeviceStatus(status, updateTime);
             } else if (SAMISession.WEBSOCKET_LIVE_ONCLOSE.equals(action) ||
                     SAMISession.WEBSOCKET_LIVE_ONERROR.equals(action)) {
-                displayLiveStatus(LIVE_HEADER + intent.getStringExtra("error"));
+                displayLiveStatus(LIVE_HEADER + intent.getStringExtra(SAMISession.ERROR));
             } else  if (SAMISession.WEBSOCKET_WS_ONOPEN.equals(action)) {
                 displayWSStatus(WS_HEADER + CONNECTED);
             } else  if (SAMISession.WEBSOCKET_WS_ONREG.equals(action)) {
                 displayWSStatus(WS_HEADER + DEVICE_REGISTERED);
             } else if (SAMISession.WEBSOCKET_WS_ONMSG.equals(action)) {
-                displayWSReceived(intent.getStringExtra(("msg"))); //YWU TODO convert to constant
+                displayWSReceived(intent.getStringExtra("msg"));
             } else if (SAMISession.WEBSOCKET_WS_ONACK.equals(action)) {
-                displayWSReceived(intent.getStringExtra(("ack"))); //YWU TODO convert to constant
+                displayWSReceived(intent.getStringExtra(SAMISession.ACK));
             } else if (SAMISession.WEBSOCKET_WS_ONCLOSE.equals(action) ||
                     SAMISession.WEBSOCKET_WS_ONERROR.equals(action)) {
-                displayWSStatus(WS_HEADER + intent.getStringExtra("error")); //YWU TODO convert to constant
+                displayWSStatus(WS_HEADER + intent.getStringExtra(SAMISession.ERROR));
             }
 
         }

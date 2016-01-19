@@ -41,9 +41,9 @@ import io.samsungsami.websocket.RegisterMessage;
 import io.samsungsami.websocket.SamiWebSocketCallback;
 
 public class SAMISession {
-    private static final String TAG = SAMISession.class.getSimpleName();
-    private final static String DEVICE_ID = "fde8715961f84798a841be23480b8ce5";
-    private final static String DEVICE_TOKEN = "06192752a09041f8b7c2878fa460fedc";
+    private final static String TAG = SAMISession.class.getSimpleName();
+    private final static String DEVICE_ID = "<YOUR DEVICE ID>";
+    private final static String DEVICE_TOKEN = "<YOUR DEVICE TOKEN>";
     private final static String DEVICE_NAME = "Smart Light";
     private final static String ACTION_NAME_ON = "setOn";
     private final static String ACTION_NAME_OFF = "setOff";
@@ -74,9 +74,11 @@ public class SAMISession {
     public final static String SDID = "sdid";
     public final static String DEVICE_DATA = "data";
     public final static String TIMESTEP = "ts";
+    public final static String ACK = "ack";
+    public final static String ERROR = "error";
 
-    private FirehoseWebSocket mLive = null;
-    private DeviceChannelWebSocket mWS = null;
+    private FirehoseWebSocket mLive = null; //  end point: /live
+    private DeviceChannelWebSocket mWS = null; // end point: /websocket
 
     public static SAMISession getInstance() {
         return ourInstance;
@@ -188,7 +190,7 @@ public class SAMISession {
                 public void onMessage(MessageOut messageOut) {
                     Log.d(TAG, "DeviceChannelWebSocket::onMessage(" + messageOut.toString());
                     final Intent intent = new Intent(WEBSOCKET_WS_ONMSG);
-                    intent.putExtra("ack", messageOut.toString());
+                    intent.putExtra(ACK, messageOut.toString());
                     LocalBroadcastManager.getInstance(ourContext).sendBroadcast(intent);
                 }
 
@@ -205,7 +207,7 @@ public class SAMISession {
                         intent = new Intent(WEBSOCKET_WS_ONREG);
                     } else {
                         intent = new Intent(WEBSOCKET_WS_ONACK);
-                        intent.putExtra("ack", acknowledgement.toString());
+                        intent.putExtra(ACK, acknowledgement.toString());
                     }
                     LocalBroadcastManager.getInstance(ourContext).sendBroadcast(intent);
                 }
@@ -213,7 +215,7 @@ public class SAMISession {
                 @Override
                 public void onClose(int code, String reason, boolean remote) {
                     final Intent intent = new Intent(WEBSOCKET_WS_ONCLOSE);
-                    intent.putExtra("error", "mWebSocket is closed. code: " + code + "; reason: " + reason);
+                    intent.putExtra(ERROR, "mWebSocket is closed. code: " + code + "; reason: " + reason);
                     LocalBroadcastManager.getInstance(ourContext).sendBroadcast(intent);
 
                 }
@@ -221,7 +223,7 @@ public class SAMISession {
                 @Override
                 public void onError(Error error) {
                     final Intent intent = new Intent(WEBSOCKET_WS_ONERROR);
-                    intent.putExtra("error", "mWebSocket error: " + error.getMessage());
+                    intent.putExtra(ERROR, "mWebSocket error: " + error.getMessage());
                     LocalBroadcastManager.getInstance(ourContext).sendBroadcast(intent);
                 }
             });
