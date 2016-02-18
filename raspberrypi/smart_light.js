@@ -1,6 +1,6 @@
 var webSocketUrl = "wss://api.samsungsami.io/v1.1/websocket?ack=true";
-var device_id = "fde8715961f84798a841be23480b8ce5";
-var device_token = "06192752a09041f8b7c2878fa460fedc";
+var device_id = "<YOUR DEVICE ID>";
+var device_token = "<YOUR DEVICE TOKEN>";
 
 var WebSocket = require('ws');
 var isWebSocketReady = false;
@@ -33,7 +33,8 @@ function start() {
          handleRcvMsg(data);
     });
     ws.on('close', function() {
-         console.log("WebSocket connection is closed ....");
+        console.log("WebSocket connection is closed ....");
+	exitClosePins();
     });
 
     gpio.setup(myPin, gpio.DIR_OUT, function(err) {
@@ -67,10 +68,10 @@ function register(){
    {
    "type":"action","cts":1451436813630,"ts":1451436813631,
    "mid":"37e1d61b61b74a3ba962726cb3ef62f1",
-   "sdid":"fde8715961f84798a841be23480b8ce5",
-   "ddid":"fde8715961f84798a841be23480b8ce5",
+   "sdid”:”xxxx”,
+   "ddid”:”xxxx”,
    "data":{"actions":[{"name":"setOn","parameters":{}}]},
-   "ddtid":"dtf3cdb9880d2e418f915fb9252e267051","uid":"650a7c8b6ca44730b077ce849af64e90","mv":1
+   "ddtid":"dtf3cdb9880d2e418f915fb9252e267051","uid":"650xxxx”,”mv":1
    }
 
  */
@@ -88,7 +89,7 @@ function handleRcvMsg(msg){
     else if (actionName.toLowerCase() == "setoff") {
         newState = 0;
     } else {
-        console.log('Do nothing since receiving unrecoganized action ' + actionName);
+        console.log('Do nothing since receiving unrecognized action ' + actionName);
         return;
     }
     toggleLED(newState);
@@ -121,12 +122,22 @@ function sendStateToSami(){
     }    
 }
 
+/** 
+ * Properly cleanup the pins
+ */
+function exitClosePins() {
+    gpio.destroy(function() {
+        console.log('Exit and destroy all pins!');
+        process.exit();
+    });
+}
+
 /**
  * All start here
  */
 
-
 start();
 
+process.on('SIGINT', exitClosePins);
 
 
