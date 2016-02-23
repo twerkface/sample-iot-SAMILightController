@@ -8,7 +8,7 @@ Build a remote light control system using SAMI, LED, Raspberry Pi, and an Androi
 Introduction
 -------------
 
-The tutorial [Your first IoT remote control system](https://developer.samsungsami.io/sami/tutorials/your-first-iot-control-system.html) at http://developer.samsungsami.io/ describes what the system does and how it is implemented.
+The tutorial [Your first IoT remote control system](https://developer.samsungsami.io/sami/tutorials/an-iot-remote-control.html) at http://developer.samsungsami.io/ describes what the system does and how it is implemented.
 
 This repository contains the following software:
 
@@ -20,12 +20,12 @@ Android Application
 
 The root directory of the application is `sample-android-SAMIIoTSimpleController`.
 
-Consult [set up the Android project](https://developer.samsungsami.io/sami/tutorials/your-first-iot-control-system.html#set-up-the-android-project) in the tutorial to learn the prerequisites and installation steps.
+Consult [set up the Android project](https://developer.samsungsami.io/sami/tutorials/an-iot-remote-control.html#set-up-the-android-project) in the tutorial to learn the prerequisites and installation steps.
 
 Nodejs Program for Raspberry Pi
 -------------
 
-The code is located in `raspberrypi` directory. Consult [Set up the Raspberry Pi](https://developer.samsungsami.io/sami/tutorials/your-first-iot-control-system.html#set-up-the-software) in the tutorial to install the packages and to run the program on the Pi.
+The code is located in `raspberrypi` directory. Consult [Set up the Raspberry Pi](https://developer.samsungsami.io/sami/tutorials/an-iot-remote-control.html#set-up-the-software) in the tutorial to install the packages and to run the program on the Pi.
 
 More about SAMI
 ---------------
