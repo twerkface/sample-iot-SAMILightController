@@ -1,3 +1,5 @@
+**Note that this application is no longer current. An updated application for ARTIK Cloud can be found [here](https://github.com/artikcloud/tutorial-iot-control-light).**
+
 # Control an LED using Android App via SAMI
 
 Build a remote light control system using SAMI, LED, Raspberry Pi, and an Android application. The system contains the following components:
